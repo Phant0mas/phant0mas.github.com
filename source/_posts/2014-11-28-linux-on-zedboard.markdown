@@ -31,7 +31,7 @@ since you are here, <a href="http://www.zedboard.org/product/zedboard">read this
 <li>As it is based on Ubuntu, you can have access to the large collections of programs in its repos, making the customization of the system a lot easier.</li>
 </ol> 
 
-###What we're goind to build
+###What we're going to build
 
 <ul>
 <li>An XPS design for ZedBoard, which we’ll export to the SDK.</li>
