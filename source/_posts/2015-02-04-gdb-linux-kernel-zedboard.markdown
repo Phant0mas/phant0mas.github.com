@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Debug a running linux kernel on the zedboard"
+title: "Debug a running linux kernel on the zedboard with GDB"
 date: 2015-02-05 17:21:16 +0000
 comments: true
-categories: linux kernel gdb zedboard
+categories: linux kernel gdb zedboard zynq
 published: true
 ---
 
