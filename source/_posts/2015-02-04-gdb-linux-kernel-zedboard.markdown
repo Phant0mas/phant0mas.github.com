@@ -93,7 +93,7 @@ Reading symbols from /home/manolis/git_repos/linux-analog/vmlinux...done.
 
 {% endcodeblock %}
 
-* Then,under the GDB command prompt, enter: ``target remote localhost:1234``
+* Then, under the GDB command prompt, enter: ``target remote localhost:1234``
 
 {% codeblock lang:sh shell %}
 (gdb) target remote localhost:1234
