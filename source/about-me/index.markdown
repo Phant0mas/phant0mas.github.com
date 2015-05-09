@@ -12,7 +12,7 @@ footer: true
 <p>My name is <strong>Manolis Ragkousis</strong> and I am a young (currently 21 years old) Computer Scientist from Paros, Greece.</p>
 
 Currently I am a CS student at the <strong>ATEI of Crete, Department of Informatics Engineering</strong> in Iraklion. I am interested
-in working in operating systems and embedded devices.
+in working in operating systems, embedded devices and filesystems.
 
 I work as a lab assistant at the AES (Architecture and Embedded Systems) lab, at the Department of Informatics Engineering, under the
 guidance of professor Dr. Georgios Kornaros. I am developing Linux device drivers for the fpga-based devices, created in the lab, for use in GNU/Linux systems.
@@ -20,13 +20,16 @@ guidance of professor Dr. Georgios Kornaros. I am developing Linux device driver
 I am working on various educational projects which you can check on my <a href="https://github.com/Phant0mas">github page</a> and I am
 also contributing to the <a href="http://www.gnu.org/software/guix/">GNU Guix functional package manager for the GNU system</a>.
 
-Regarding my career plans, I am interested in working in the Linux Kernel, as a device driver developer or a site reliability Engineer.
-
 ##CV 
 I maintain an online CV at stack overflow careers which you can find <a href="http://careers.stackoverflow.com/manolisragkousis">here</a>.
 
 ##Current Occupation
 I am currently working at the AES (Architecture and Embedded Systems) lab of my university as a lab assistant.
+
+I am also working on the GSoC Project of porting Guix to GNU/Hurd.
+<a href="https://savannah.gnu.org/forum/forum.php?forum_id=8264">Here is the official
+announcement.</a> and here is <a href="http://www.google-melange.com/gsoc/proposal/
+public/google/gsoc2015/phant0mas/5649050225344512">the project proposal.</a>
 
 ##Disclaimer
 Opinions are my own and do not represent any past or current employers.
