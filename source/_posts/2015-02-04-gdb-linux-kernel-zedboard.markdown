@@ -44,7 +44,7 @@ XMD%
 
 {% endcodeblock %}
 
-* Run ``connect arm hw``. This will start GDB server at ``localhost:1234``.
+* Run ``connect arm hw``. This will start a GDB server at ``localhost:1234``.
 {% codeblock lang:sh shell %}
 XMD% connect arm hw
 
@@ -73,11 +73,11 @@ Starting GDB server for "arm" target (id = 64) at TCP port no 1234
 XMD% 
 {% endcodeblock %}
 
-* Open a new shell and go to the folder where the kernel sources are located, the
+* Open a new shell and go to the directory where the kernel sources are located, the
    ones you used to build the kernel, and run ``arm-xilinx-eabi-gdb vmlinux``.
 
-   In my case I am using ``arm-xilinx-eabi-gdb`` but any arm targeted gdb will do.
-   We are using ``vmlinux`` so the debugger can read the kernel symbols.
+   In my case I am using ``arm-xilinx-eabi-gdb`` but any gdb cross-build for arm will do.
+   We are passing ``vmlinux`` to the debugger, so it can read the kernel symbols.
 
 {% codeblock lang:sh shell %}
 user@workstation ~/git_repos/linux-analog $: arm-xilinx-eabi-gdb vmlinux

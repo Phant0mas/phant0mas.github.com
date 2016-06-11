@@ -14,10 +14,7 @@ Student from Paros, Greece.</p>
 
 Currently I am a CS student at the <strong>ATEI of Crete, Department of
 Informatics Engineering</strong> in Iraklion. I am interested
-in working in operating systems, embedded devices and filesystems.
-
-I am working on small personal projects which you can check on my
-<a href="https://github.com/Phant0mas">github page</a>.
+in working in operating systems and embedded devices.
 
 I am also contributing to the <a href="http://www.gnu.org/software/guix/">GNU Guix functional package manager for the GNU system</a>.
 I am working on the "Guix on GNU Hurd" port. It started as a GSoC Project and you can check more at
