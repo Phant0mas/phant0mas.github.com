@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Phant0mas&#8217; Place</title>
+  <title>Setup a Linaro GNU/Linux Enviroment on the ZedBoard - Phant0mas&#8217; Place</title>
   <meta name="author" content="Manolis Ragkousis">
 
   
-  <meta name="description" content="Disclaimers I am sharing what works for me. It may not work for you or it may fail over time.
-You may suffer data loss or worse. I disclaim all &hellip;">
+  <meta name="description" content="[Notice: This guide is outdated, but works. I will upload
+a guide for newer sources sometime in the future!] Before we start Disclaimers: I am &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@ You may suffer data loss or worse. I disclaim all &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.manolisragkousis.com">
+  <link rel="canonical" href="http://www.manolisragkousis.com/blog/2014/05/04/linux-on-zedboard">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Phant0mas' Place" type="application/atom+xml">
@@ -77,221 +77,12 @@ You may suffer data loss or worse. I disclaim all &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/02/05/gdb-linux-kernel-zedboard/">Debug a Running Linux Kernel on the Zedboard With GDB</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-05T17:21:16+00:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>5:21 pm</span></time>
-        
-           | <a href="/blog/2015/02/05/gdb-linux-kernel-zedboard/#disqus_thread"
-             data-disqus-identifier="http://www.manolisragkousis.com/blog/2015/02/05/gdb-linux-kernel-zedboard/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h5>Disclaimers</h5>
-
-<p>I am sharing what works for me. It may not work for you or it may fail over time.
-You may suffer data loss or worse. I disclaim all warranties and representations.</p>
-
-<h4>Prerequisities</h4>
-
-<ul>
-<li>Xilinx Microprocessor Debugger (XMD)</li>
-<li>GDB capable of understanding the target machine</li>
-</ul>
-
-
-<h3>Debugging the Kernel</h3>
-
-<p>When developing a device driver, having access to the linux internals using GDB
-may be the key to meeting that deadline. On the zedboard, debugging the kernel
-with GDB is actually very easy with the help of the Xilinx Microprocessor Debugger,
-or XMD for short.</p>
-
-<p>XMD is included with the Vivado Design Suite from Xilinx. In case you are working
-with the older ISE Design Suite, the included XMD should work as well.</p>
-
-<h3>Start debugging</h3>
-
-<ul>
-<li>Connect the JTAG to the zedboard (or a micro usb to the PROG USB port) and boot
- it.</li>
-<li>Open a shell and run <code>xmd</code>.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span>shell </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>user@workstation ~ <span class="nv">$:</span> xmd
-</span><span class='line'>Xilinx Microprocessor Debugger <span class="o">(</span>XMD<span class="o">)</span> Engine
-</span><span class='line'>Xilinx EDK 14.7 Build EDK_P.20131013
-</span><span class='line'>Copyright <span class="o">(</span>c<span class="o">)</span> 1995-2012 Xilinx, Inc.  All rights reserved.
-</span><span class='line'>
-</span><span class='line'>XMD%
-</span><span class='line'>XMD%
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Run <code>connect arm hw</code>. This will start a GDB server at <code>localhost:1234</code>.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span>shell </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>XMD% connect arm hw
-</span><span class='line'>
-</span><span class='line'>JTAG chain configuration
-</span><span class='line'>--------------------------------------------------
-</span><span class='line'>Device   ID Code        IR Length    Part Name
-</span><span class='line'> <span class="m">1</span>       4ba00477           <span class="m">4</span>        Cortex-A9
-</span><span class='line'> <span class="m">2</span>       <span class="m">23727093</span>           <span class="m">6</span>        XC7Z020
-</span><span class='line'>
-</span><span class='line'>--------------------------------------------------
-</span><span class='line'>Enabling extended memory access checks <span class="k">for</span> Zynq.
-</span><span class='line'>Writes to reserved memory are not permitted and reads <span class="k">return</span> 0.
-</span><span class='line'>To disable this feature, run <span class="s2">&quot;debugconfig -memory_access_check disable&quot;</span>.
-</span><span class='line'>
-</span><span class='line'>--------------------------------------------------
-</span><span class='line'>
-</span><span class='line'>CortexA9 Processor Configuration
-</span><span class='line'>-------------------------------------
-</span><span class='line'>Version.............................0x00000003
-</span><span class='line'>User ID.............................0x00000000
-</span><span class='line'>No of PC Breakpoints................6
-</span><span class='line'>No of Addr/Data Watchpoints.........4
-</span><span class='line'>
-</span><span class='line'>Connected to <span class="s2">&quot;arm&quot;</span> target. <span class="nv">id</span> <span class="o">=</span> 64
-</span><span class='line'>Starting GDB server <span class="k">for</span> <span class="s2">&quot;arm&quot;</span> target <span class="o">(</span><span class="nv">id</span> <span class="o">=</span> 64<span class="o">)</span> at TCP port no 1234
-</span><span class='line'>XMD%
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>Open a new shell and go to the directory where the kernel sources are located, the
- ones you used to build the kernel, and run <code>arm-xilinx-eabi-gdb vmlinux</code>.</p>
-
-<p> In my case I am using <code>arm-xilinx-eabi-gdb</code> but any gdb cross-build for arm will do.
- We are passing <code>vmlinux</code> to the debugger, so it can read the kernel symbols.</p></li>
-</ul>
-
-
-<figure class='code'><figcaption><span>shell </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>user@workstation ~/git_repos/linux-analog <span class="nv">$:</span> arm-xilinx-eabi-gdb vmlinux
-</span><span class='line'>GNU gdb <span class="o">(</span>Sourcery CodeBench Lite 2013.11-46<span class="o">)</span> 7.6.50.20130726-cvs
-</span><span class='line'>Copyright <span class="o">(</span>C<span class="o">)</span> <span class="m">2013</span> Free Software Foundation, Inc.
-</span><span class='line'>License GPLv3+: GNU GPL version <span class="m">3</span> or later &lt;http://gnu.org/licenses/gpl.html&gt;
-</span><span class='line'>This is free software: you are free to change and redistribute it.
-</span><span class='line'>There is NO WARRANTY, to the extent permitted by law.  Type <span class="s2">&quot;show copying&quot;</span>
-</span><span class='line'>and <span class="s2">&quot;show warranty&quot;</span> <span class="k">for</span> details.
-</span><span class='line'>...
-</span><span class='line'>Reading symbols from /home/manolis/git_repos/linux-analog/vmlinux...done.
-</span><span class='line'><span class="o">(</span>gdb<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Then, under the GDB command prompt, enter: <code>target remote localhost:1234</code></li>
-</ul>
-
-
-<figure class='code'><figcaption><span>shell </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="o">(</span>gdb<span class="o">)</span> target remote localhost:1234
-</span><span class='line'>Remote debugging using localhost:1234
-</span><span class='line'>cpu_v7_do_idle <span class="o">()</span> at arch/arm/mm/proc-v7.S:74
-</span><span class='line'>74        ret lr
-</span><span class='line'><span class="o">(</span>gdb<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>And now GDB is ready for debugging those kernel hangs. Enter <code>continue</code>
-in the gdb prompt so linux can continue it&rsquo;s normal operation. You can come back
-anytime and stop it in order to debug it.</li>
-</ul>
-
-
-<h4>Extras</h4>
-
-<ul>
-<li>Make sure you have enabled the kernel debug symbols in the config file of the
-kernel. Enabling <code>CONFIG_DEBUG_INFO</code> will do the trick.</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/04/linux-on-zedboard/">Setup a Linaro GNU/Linux Enviroment on the ZedBoard</a></h1>
+      <h1 class="entry-title">Setup a Linaro GNU/Linux Enviroment on the ZedBoard</h1>
     
     
       <p class="meta">
@@ -302,15 +93,15 @@ kernel. Enabling <code>CONFIG_DEBUG_INFO</code> will do the trick.</li>
 
 <time class='entry-date' datetime='2014-05-04T23:13:48+00:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:13 pm</span></time>
         
-           | <a href="/blog/2014/05/04/linux-on-zedboard/#disqus_thread"
-             data-disqus-identifier="http://www.manolisragkousis.com/blog/2014/05/04/linux-on-zedboard/">Comments</a>
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://www.manolisragkousis.com">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>[Notice: This guide is outdated, but works. I will upload
+<div class="entry-content"><p>[Notice: This guide is outdated, but works. I will upload
 a guide for newer sources sometime in the future!]</p>
 
 <h3>Before we start</h3>
@@ -640,18 +431,62 @@ from the boot process within a few seconds, depending on the speed of the SD car
 
 
 </div>
-  
-  
 
 
-    </article>
+  <footer>
+    <p class="meta">
+      
   
-  <div class="pagination">
+
+<span class="byline author vcard">Posted by <span class="fn">Manolis Ragkousis</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-05-04T23:13:48+00:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:13 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/zedboard/'>zedboard</a>, <a class='category' href='/blog/categories/zynq/'>zynq</a>
+  
+</span>
+
+
+    </p>
     
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.manolisragkousis.com/blog/2014/05/04/linux-on-zedboard/" data-via="ph4n70m4s" data-counturl="http://www.manolisragkousis.com/blog/2014/05/04/linux-on-zedboard/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
 </div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/02/05/gdb-linux-kernel-zedboard/" title="Next Post: Debug a running linux kernel on the zedboard with GDB">Debug a running linux kernel on the zedboard with GDB &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -705,6 +540,7 @@ from the boot process within a few seconds, depending on the speed of the SD car
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -719,7 +555,10 @@ from the boot process within a few seconds, depending on the speed of the SD car
       var disqus_shortname = 'phant0masplace';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.manolisragkousis.com/blog/2014/05/04/linux-on-zedboard/';
+        var disqus_url = 'http://www.manolisragkousis.com/blog/2014/05/04/linux-on-zedboard/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

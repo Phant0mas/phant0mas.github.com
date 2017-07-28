@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Kernel | Phant0mas' Place]]></title>
+  <link href="http://www.manolisragkousis.com/blog/categories/kernel/atom.xml" rel="self"/>
+  <link href="http://www.manolisragkousis.com/"/>
+  <updated>2017-07-28T22:56:11+03:00</updated>
+  <id>http://www.manolisragkousis.com/</id>
+  <author>
+    <name><![CDATA[Manolis Ragkousis]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Debug a Running Linux Kernel on the Zedboard With GDB]]></title>
+    <link href="http://www.manolisragkousis.com/blog/2015/02/05/gdb-linux-kernel-zedboard/"/>
+    <updated>2015-02-05T17:21:16+00:00</updated>
+    <id>http://www.manolisragkousis.com/blog/2015/02/05/gdb-linux-kernel-zedboard</id>
+    <content type="html"><![CDATA[<h5>Disclaimers</h5>
+
+<p>I am sharing what works for me. It may not work for you or it may fail over time.
+You may suffer data loss or worse. I disclaim all warranties and representations.</p>
+
+<h4>Prerequisities</h4>
+
+<ul>
+<li>Xilinx Microprocessor Debugger (XMD)</li>
+<li>GDB capable of understanding the target machine</li>
+</ul>
+
+
+<h3>Debugging the Kernel</h3>
+
+<p>When developing a device driver, having access to the linux internals using GDB
+may be the key to meeting that deadline. On the zedboard, debugging the kernel
+with GDB is actually very easy with the help of the Xilinx Microprocessor Debugger,
+or XMD for short.</p>
+
+<p>XMD is included with the Vivado Design Suite from Xilinx. In case you are working
+with the older ISE Design Suite, the included XMD should work as well.</p>
+
+<h3>Start debugging</h3>
+
+<ul>
+<li>Connect the JTAG to the zedboard (or a micro usb to the PROG USB port) and boot
+ it.</li>
+<li>Open a shell and run <code>xmd</code>.</li>
+</ul>
+
+
+<p><figure class='code'><figcaption><span>shell </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>user@workstation ~ <span class="nv">$:</span> xmd
+</span><span class='line'>Xilinx Microprocessor Debugger <span class="o">(</span>XMD<span class="o">)</span> Engine
+</span><span class='line'>Xilinx EDK 14.7 Build EDK_P.20131013
+</span><span class='line'>Copyright <span class="p">&amp;</span>copy<span class="p">;</span> 1995-2012 Xilinx, Inc.  All rights reserved.&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;XMD%
+</span><span class='line'>XMD%&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;
+</span></code></pre></td></tr></table></div></figure></p>
+
+<ul>
+<li>Run <code>connect arm hw</code>. This will start a GDB server at <code>localhost:1234</code>.
+<figure class='code'><figcaption><span>shell </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>XMD% connect arm hw&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;JTAG chain configuration&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;Device   ID Code        IR Length    Part Name
+</span><span class='line'> <span class="m">1</span>       4ba00477           <span class="m">4</span>        Cortex-A9
+</span><span class='line'> <span class="m">2</span>       <span class="m">23727093</span>           <span class="m">6</span>        XC7Z020&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;hr /&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;Enabling extended memory access checks <span class="k">for</span> Zynq.
+</span><span class='line'>Writes to reserved memory are not permitted and reads <span class="k">return</span> 0.
+</span><span class='line'>To disable this feature, run <span class="p">&amp;</span>ldquo<span class="p">;</span>debugconfig -memory_access_check disable<span class="p">&amp;</span>rdquo<span class="p">;</span>.&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;hr /&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;CortexA9 Processor Configuration&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;Version<span class="p">&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;</span>..0x00000003
+</span><span class='line'>User ID<span class="p">&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;</span>..0x00000000
+</span><span class='line'>No of PC Breakpoints<span class="p">&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;</span>.6
+</span><span class='line'>No of Addr/Data Watchpoints<span class="p">&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;&amp;</span>hellip<span class="p">;</span>4&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;Connected to <span class="p">&amp;</span>ldquo<span class="p">;</span>arm<span class="p">&amp;</span>rdquo<span class="p">;</span> target. <span class="nv">id</span> <span class="o">=</span> 64
+</span><span class='line'>Starting GDB server <span class="k">for</span> <span class="p">&amp;</span>ldquo<span class="p">;</span>arm<span class="p">&amp;</span>rdquo<span class="p">;</span> target <span class="o">(</span><span class="nv">id</span> <span class="o">=</span> 64<span class="o">)</span> at TCP port no 1234
+</span><span class='line'>XMD%
+</span></code></pre></td></tr></table></div></figure></p>
+
+<ul>
+<li><p>Open a new shell and go to the directory where the kernel sources are located, the
+ ones you used to build the kernel, and run <code>arm-xilinx-eabi-gdb vmlinux</code>.</p>
+
+<p> In my case I am using <code>arm-xilinx-eabi-gdb</code> but any gdb cross-build for arm will do.
+ We are passing <code>vmlinux</code> to the debugger, so it can read the kernel symbols.</p></li>
+</ul>
+
+
+<p><figure class='code'><figcaption><span>shell </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>user@workstation ~/git_repos/linux-analog <span class="nv">$:</span> arm-xilinx-eabi-gdb vmlinux
+</span><span class='line'>GNU gdb <span class="o">(</span>Sourcery CodeBench Lite 2013.11-46<span class="o">)</span> 7.6.50.20130726-cvs
+</span><span class='line'>Copyright <span class="p">&amp;</span>copy<span class="p">;</span> <span class="m">2013</span> Free Software Foundation, Inc.
+</span><span class='line'>License GPLv3+: GNU GPL version <span class="m">3</span> or later &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;http://gnu.org/licenses/gpl.html&quot;</span>&gt;http://gnu.org/licenses/gpl.html&lt;/a&gt;
+</span><span class='line'>This is free software: you are free to change and redistribute it.
+</span><span class='line'>There is NO WARRANTY, to the extent permitted by law.  Type <span class="p">&amp;</span>ldquo<span class="p">;</span>show copying<span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>and <span class="p">&amp;</span>ldquo<span class="p">;</span>show warranty<span class="p">&amp;</span>rdquo<span class="p">;</span> <span class="k">for</span> details.
+</span><span class='line'><span class="p">&amp;</span>hellip<span class="p">;</span>
+</span><span class='line'>Reading symbols from /home/manolis/git_repos/linux-analog/vmlinux<span class="p">&amp;</span>hellip<span class="p">;</span><span class="k">done</span>.
+</span><span class='line'><span class="o">(</span>gdb<span class="o">)</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;
+</span></code></pre></td></tr></table></div></figure></p>
+
+<ul>
+<li>Then, under the GDB command prompt, enter: <code>target remote localhost:1234</code></li>
+</ul>
+
+
+<p><figure class='code'><figcaption><span>shell </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="o">(</span>gdb<span class="o">)</span> target remote localhost:1234
+</span><span class='line'>Remote debugging using localhost:1234
+</span><span class='line'>cpu_v7_do_idle <span class="o">()</span> at arch/arm/mm/proc-v7.S:74
+</span><span class='line'><span class="m">74</span>      ret lr
+</span><span class='line'><span class="o">(</span>gdb<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<ul>
+<li>And now GDB is ready for debugging those kernel hangs. Enter <code>continue</code>
+in the gdb prompt so linux can continue it&rsquo;s normal operation. You can come back
+anytime and stop it in order to debug it.</li>
+</ul>
+
+
+<h4>Extras</h4>
+
+<ul>
+<li>Make sure you have enabled the kernel debug symbols in the config file of the
+kernel. Enabling <code>CONFIG_DEBUG_INFO</code> will do the trick.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

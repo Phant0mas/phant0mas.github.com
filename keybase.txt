@@ -1,0 +1,76 @@
+==================================================================
+https://keybase.io/manolisragkousis
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://www.manolisragkousis.com
+  * I am manolisragkousis (https://keybase.io/manolisragkousis) on keybase.
+  * I have a public key with fingerprint 7E1F 691D EF24 C143 CD9C  EDD9 BA7D 56CA EB6A 1E9A
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "client": {
+            "name": "keybase.io node.js client",
+            "version": "0.7.3"
+        },
+        "key": {
+            "fingerprint": "7e1f691def24c143cd9cedd9ba7d56caeb6a1e9a",
+            "host": "keybase.io",
+            "key_id": "BA7D56CAEB6A1E9A",
+            "uid": "f25d3bba42556ac979c7c3b3fbdd6d00",
+            "username": "manolisragkousis"
+        },
+        "merkle_root": {
+            "ctime": 1423662118,
+            "hash": "865bd682a2598a82797c203cfd178cae67421916ac72579d1e3cd038ac2a15040cc1edae2c5f5f40fd57ce26d231edc27dc7ee7a6f7b755f591c9ba467c0f7ba",
+            "seqno": 153510
+        },
+        "service": {
+            "hostname": "www.manolisragkousis.com",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1423662174,
+    "expire_in": 157680000,
+    "prev": "b3db0fac6b88541b1029d5fcb4d37332d8414285bfe467a509175e0671fe5cb0",
+    "seqno": 6,
+    "tag": "signature"
+}
+
+which yields the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v2
+
+owFdUm1oFEcYvvOjRqvBFiFWbJVFNGg4Z2Z3ZnZTpMYY/OFHfqRoK+J1vja3yd3u
+dXdz10RCoVqK1lAj+V2x1Ur+qEjFjwvaGA3StAgVsUUQiSgRFAW1ltIEZ0OkrfNr
+5p3nfd7neWYOzJueqkov6bXkanD9bHrkAU99eGvHzl0GD2SnUb/LEHlP+XGy81lB
+GfVGu+rkLFIZL1jqB1Jl2qKlU5g6o6TCyAt8jQIZmjGN7roEnjS7nt+qwmLoJVwG
+VdAlDpTKRZaAlimkI5SUDmdUYiKY4oRB5TBNmQui+H9TjUnOrCd1dV0DXY9JY0PT
+OtIAm5wGfdcxeeEiLE3OmYUwJkw41BFUmNx0uZREApAAIxVOWSowP8h7Ucha24OO
+yIsS3QUVtudVNgyCSfMi9hIotJBJCILQ1spYlNPNNsFcEhsxhB2b2Yg6VCBgCldC
+amsrhFoIOlCroAhTR0Kl7QLTZgIxiIEFhIBKMoUEdrFrAVdiKhQiEpm6LhCVgipF
+GXEpp1hjHCh0UBahAuhSklGkPvUDLQ6bGILu5ByWPKES3Ul8Uy7L5XLmdacZERQ0
+QTEM4kAEeY36KZ2L42J9EkHcWZzsUzw7xZjlni/1S/73qaFGvpYOteoM9VnRC1XW
+SxCYEhvolQxSJU3JTcmBywThto0tyCFAjsSu4JY0qWkiaVuay8bcVdonw8CBFCtA
+KHQVFhz865lomaxVU0Zeq8/ijlAZ3XvTi2ek0lWpN2ZOS/5yas7s+a8++Im2WRMO
+Jj2lCw/t4yePL9lybc7tTfn9N1NtR14Mnd7TN1x5NrYRWM+bj8jnq8LR8bO5tDf2
+4NJvlfuN5TXyk0O1vxYmDq74sWVoY+FA1+6rVYc6vlTP0A/+W3z/iRWLlz/9egBc
+vly9qHblR+mtJfL34EB+eN6E+Gtw/J2FT8rfjnZ99bT6xvnvDveMZ7P9761tbFl7
+uOvnfZXhyqrebz4fK1Tev9BTHW6xq5p3vpu+XRO1rJ51bO/cIDi37+723ObyyIJl
+cy9uuvJxPND8+N6jmhv/5GZe6e/d9vuG6WXr7dyd630ra5p2/3l0xB4afPOPFxOX
++n4Znnb3+9HaZXjNng+uLV9/5ov5p249qX4J
+=SrBJ
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/manolisragkousis
+
+==================================================================
