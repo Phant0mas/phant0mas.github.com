@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Hacking | Phant0mas' Place]]></title>
+  <link href="http://www.manolisragkousis.com/blog/categories/hacking/atom.xml" rel="self"/>
+  <link href="http://www.manolisragkousis.com/"/>
+  <updated>2017-07-29T21:18:49+03:00</updated>
+  <id>http://www.manolisragkousis.com/</id>
+  <author>
+    <name><![CDATA[Manolis Ragkousis]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[My Hacking Adventures.]]></title>
+    <link href="http://www.manolisragkousis.com/blog/2017/07/29/software-adventures/"/>
+    <updated>2017-07-29T12:20:08+03:00</updated>
+    <id>http://www.manolisragkousis.com/blog/2017/07/29/software-adventures</id>
+    <content type="html"><![CDATA[<h2>Long time no see</h2>
+
+<p>It&rsquo;s been a long time since I last updated this blog. Between my
+studies, the last two GSoCs I was a part of and my personal life I had
+little time to spend on this blog. Now this will change. With this post
+I will tell you a little about some of the things I am working on and
+some goals I have in mind.</p>
+
+<p>I hope that by the end of this post my mind will be better organized and get more productive!</p>
+
+<h2>My work on Guix and Hurd</h2>
+
+<p>Two years ago I announced that <a href="https://lists.gnu.org/archive/html/guix-devel/2015-08/msg00379.html">I successfully ported GNU Guix to GNU Hurd</a>.
+But that didn&rsquo;t mean that everything was done. During GSoC 2016 I started
+working on creating a Hurd based GuixSD system. Unfortunately the time
+frame was not enough and
+<a href="https://lists.gnu.org/archive/html/guix-devel/2016-08/msg01002.html">it needed more work</a>.
+But I have continued working on it and hopefully
+I will be able to deliver a working image soon. I also have help from a fellow hacker
+called Rene, and which I am really thankful.</p>
+
+<p>I try to push all of my work
+to the upstream Guix repo, but sometimes my code doesn&rsquo;t meet the standards.
+As a result the day to day hacking happens in <a href="https://github.com/Phant0mas/Guix-on-Hurd">a github repo</a>.</p>
+
+<p>I will write another post on how to use that repo to actually try Guix on Hurd yourself.</p>
+
+<h4>Things that work:</h4>
+
+<ul>
+<li>Guix can cross-build or build natively most of the packages needed
+for a GNU system and others.</li>
+</ul>
+
+
+<h4>Things I need to finish:</h4>
+
+<ul>
+<li>There is a library I wrote for the Hurd called <a href="https://github.com/Phant0mas/Hurd/commit/3501ee22ad4150b3b2cf9a386d2350b9a68aecd8">libhurdutil</a> which I need
+to clean and finally push to Hurd.</li>
+<li>Use the library above to finish implementing build isolation
+in the Guix daemon while on Hurd.</li>
+<li>Fix the packages that cannot be build but are needed for a GNU system.</li>
+</ul>
+
+
+<h2>My work on Guix (but not Hurd :P)</h2>
+
+<p>I am using Guix in my everyday life a lot! This mean I had to add a couple of
+packages, not related to Hurd, in the span of these last 4 years .</p>
+
+<h4>Currently I need to finish:</h4>
+
+<ul>
+<li>The GNU Radio package.</li>
+<li>The Open MW package. (I have already packaged its dependencies)</li>
+</ul>
+
+
+<h2>My thesis on L4/Fiasco</h2>
+
+<p>The purpose of this thesis is to offer isolation between processes,
+where a process can be a simple app that read from a sensor to a fully fledged Linux system.
+And all this on top of a zynq board, called zedboard, which is an FPGA + arm CPU.
+The plan is to control which process access what hardware. While running on the same system.
+And did I mention Fiasco is a microkernel? It sounded cool to me!</p>
+
+<p>While the thesis did have some setbacks, which I will talk in another post,
+it has advanced enough to think that I will be able to defend it sometime
+in September.</p>
+
+<h4>Currently I need to:</h4>
+
+<ul>
+<li>Solve issues with accessing time controllers from inside the processes.</li>
+<li>Write the thesis text.</li>
+</ul>
+
+
+<p>In a future post I will get into the inner working of my thesis. Until
+then if you are not aware of L4/Fiasco please visit <a href="https://os.inf.tu-dresden.de/fiasco/">here</a>.</p>
+
+<h2>My smart home project.</h2>
+
+<p>A year go I was given the opportunity to finish the unfinished building which is directly
+upstairs from the one I am now. Suddenly the idea came. Why not automate as much as I can!?
+Create a house which will learn its occupants. Design everything from scratch. And I started.</p>
+
+<p>For the sake of not making the post longer than it is now, I will redirect you to my twitter
+feed and <a href="https://twitter.com/phant0mas_/status/793166019976192000">my conversations with David Thompson</a>.
+In the near future I will add a post which I will get into the details of the house.</p>
+
+<h2>This blog</h2>
+
+<p>David has created a static site generator called <a href="https://haunt.dthompson.us/">haunt</a> in scheme.
+Eventually I want to move this blog to haunt.</p>
+
+<h2>Grand Plan?</h2>
+
+<p>Is this my Grand Plan? Well I am mostly seeing this as a way to bring my thoughts in
+order and create a plan for the next six months. It doesn&rsquo;t necessarily mean that I
+will manage to finish everything but it&rsquo;s a good way to understand what I want to do,
+by actually trying to explain everything in my head and in my notes to other people.</p>
+
+<p>By the end of this 6 months period, I will do my best to complete these goals!</p>
+
+<p>Manolis out.</p>
+]]></content>
+  </entry>
+  
+</feed>
