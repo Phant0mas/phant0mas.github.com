@@ -9,8 +9,8 @@
   <meta name="author" content="Manolis Ragkousis">
 
   
-  <meta name="description" content="Long time no see It&rsquo;s been a long time since I last updated this blog. Between my
-studies, the last two GSoCs I was a part of and my personal &hellip;">
+  <meta name="description" content="August out! August is almost over. The same could be said for the summer, but I am in Greece.
+I will probably still be using A/C at least until &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,126 @@ studies, the last two GSoCs I was a part of and my personal &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/08/30/august-hacking-update/">My August Hacking Update</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2017-08-30T14:00:25+03:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>2:00 pm</span></time>
+        
+           | <a href="/blog/2017/08/30/august-hacking-update/#disqus_thread"
+             data-disqus-identifier="http://www.manolisragkousis.com/blog/2017/08/30/august-hacking-update/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>August out!</h2>
+
+<p>August is almost over. The same could be said for the summer, but I am in Greece.
+I will probably still be using A/C at least until November :P. The first
+half of the month was really productive, but then I removed two of my wisdom teeth
+and I had to take it easy. Anyhow let&rsquo;s see what I got done.</p>
+
+<h2>My work on Guix</h2>
+
+<figure class='code'><figcaption><span>Guix master </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git log --since<span class="o">=</span><span class="s2">&quot;last month&quot;</span> --author<span class="o">=</span>Manolis  --pretty<span class="o">=</span><span class="s1">&#39;format:%h %cd %s&#39;</span> --date<span class="o">=</span>format:<span class="s1">&#39;%Y-%m-%d&#39;</span> --reverse
+</span><span class='line'>9ef5940ce 2017-08-02 gnu: calibre: Add python2-msgpack as an input.
+</span><span class='line'>5638d7150 2017-08-03 gnu: openscenegraph: Add <span class="s1">&#39;Release&#39;</span> configure flag.
+</span><span class='line'>c608fe8cf 2017-08-09 gnu: Add ois.
+</span><span class='line'>2d5bf32b8 2017-08-09 gnu: googletest: Build shared libraries.
+</span><span class='line'>dd75a9a22 2017-08-17 gnu: Add ogre.
+</span><span class='line'>42d0d13de 2017-08-17 gnu: Add mygui.
+</span><span class='line'>e9a599cdc 2017-08-17 gnu: Add OpenMW.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While I thought packaging OpenMW would take me longer, I managed to track the dependencies,
+package them, and make the tests work with some serious two week work.</p>
+
+<p><img src="images/openmw-screenshot.png" title="'OpenMW on GuixSD'" ></p>
+
+<p>Let&rsquo;s say now that you are thinking about contributing to OpenMW, and you are also using
+Guix (or GuixSD). Here is how you can setup your environment, fast:</p>
+
+<figure class='code'><figcaption><span>OpenMW Environment</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>manolis@prometheus ~/repos/openmw <span class="nv">$ </span>guix environment openmw  --pure
+</span><span class='line'>substitute: updating list of substitutes from <span class="s1">&#39;https://mirror.hydra.gnu.org&#39;</span>... 100.0%
+</span><span class='line'>substitute: updating list of substitutes from <span class="s1">&#39;https://mirror.hydra.gnu.org&#39;</span>... 100.0%
+</span><span class='line'>manolis@prometheus ~/repos/openmw <span class="o">[</span>env<span class="o">]</span><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And just like that you have an environment with all the openmw dependencies and
+you are ready to start hacking.</p>
+
+<h2>Smart Home Project</h2>
+
+<p>The home project is moving forward. The windows will probably arrive next week
+(they are currently being painted.) and today I connected the new cat6
+underground lines to the phone company&rsquo;s (OTE) cables. It was a miracle how the
+old cables were still working, as they were in a miserable condition.
+I think the result speaks for itself.</p>
+
+<p><img src="images/2017-08-31_12.01.11.jpg" title="'Phone cables 1'" ></p>
+
+<p><img src="images/2017-08-31_12.02.04.jpg" title="'Phone cables 2'" ></p>
+
+<p>I also started working on the hardware for the smart locks. I experimented a
+bit on my room&rsquo;s door and this is the prototype.</p>
+
+<p><img src="images/2017-08-30_20.43.06.jpg" title="'Electric Door'" ></p>
+
+<p>I am using an Arduino and a mosfet to drive the 12V electric lock. I am also
+planing to install a cover with a keypad on the outside of the door. Mainly
+as a way to open the door in case I forget my phone and to cover the missing
+parts of the door :P.</p>
+
+<h2>Reading Books</h2>
+
+<p>There are some books that every CS student should read in order to call himself
+one. One of those is &ldquo;Structure and Interpretation of Computer Programs&rdquo; or SICP
+for short. This book has enough material to teach you more than most students
+learn in Greek universities in 4 years time. And I finally got my hands on a
+hard copy!!</p>
+
+<h2>September is coming</h2>
+
+<p>In the first 10 days of September I expect to install the new windows/doors in
+the house so I can finally get the new home network online. I will then be able
+to start activating the smart home mechanisms and show everyone what I have in mind.
+I also definitely hope that September will finally be the month I get to finish
+my thesis text and defend it. We will see how it will go.</p>
+
+<p>Manolis out.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -795,6 +915,10 @@ from the boot process within a few seconds, depending on the speed of the SD car
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/08/30/august-hacking-update/">My August Hacking Update</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/07/29/hacking-adventures/">My Hacking Adventures.</a>
